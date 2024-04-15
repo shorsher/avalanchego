@@ -86,6 +86,7 @@ func New(config node.Config) (App, error) {
 func Run(app App) int {
 	// start running the application
 	if err := app.Start(); err != nil {
+		fmt.Println("EXITING START WITH ERROR: %s", err.Error())
 		return 1
 	}
 

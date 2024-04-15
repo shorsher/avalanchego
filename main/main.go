@@ -44,12 +44,14 @@ func main() {
 		fmt.Println(app.Header)
 	}
 
+	fmt.Println("starting avalanche")
 	nodeApp, err := app.New(nodeConfig)
 	if err != nil {
 		fmt.Printf("couldn't start node: %s\n", err)
 		os.Exit(1)
 	}
-
+	fmt.Println("running app")
 	exitCode := app.Run(nodeApp)
+	fmt.Printf("exiting app w/ error code %d", exitCode)
 	os.Exit(exitCode)
 }
