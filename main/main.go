@@ -42,10 +42,14 @@ func main() {
 	}
 
 	nodeApp := app.New(nodeConfig) // Create node wrapper
+	fmt.Println("printing app header")
 	if term.IsTerminal(int(os.Stdout.Fd())) {
 		fmt.Println(app.Header)
 	}
+	fmt.Println("printed app header")
 
+	fmt.Println("starting node")
 	exitCode := app.Run(nodeApp)
+	fmt.Println("exited")
 	os.Exit(exitCode)
 }
