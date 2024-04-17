@@ -64,6 +64,7 @@ func New(config node.Config) App {
 func Run(app App) int {
 	// start running the application
 	if err := app.Start(); err != nil {
+		// fmt.Printf("AVAX ERROR: %+v\n", err.Error())
 		return 1
 	}
 
