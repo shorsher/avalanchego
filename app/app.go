@@ -63,10 +63,13 @@ func New(config node.Config) App {
 
 func Run(app App) int {
 	// start running the application
+	fmt.Println("Starting app")
 	if err := app.Start(); err != nil {
-		// fmt.Printf("AVAX ERROR: %+v\n", err.Error())
+		fmt.Printf("AVAX start ERROR: %+v\n", err.Error())
 		return 1
 	}
+
+	fmt.Println("finished starting app")
 
 	// register signals to kill the application
 	signals := make(chan os.Signal, 1)
@@ -111,19 +114,24 @@ type app struct {
 func (a *app) Start() error {
 	// Set the data directory permissions to be read write.
 	if err := perms.ChmodR(a.config.DatabaseConfig.Path, true, perms.ReadWriteExecute); err != nil {
+		fmt.Println("chmod database config error")
 		return fmt.Errorf("failed to restrict the permissions of the database directory with: %w", err)
 	}
 	if err := perms.ChmodR(a.config.LoggingConfig.Directory, true, perms.ReadWriteExecute); err != nil {
+		fmt.Println("chmod logging config error")
 		return fmt.Errorf("failed to restrict the permissions of the log directory with: %w", err)
 	}
 
+	fmt.Println("making logs")
 	// we want to create the logger after the plugin has started the app
 	logFactory := logging.NewFactory(a.config.LoggingConfig)
 	log, err := logFactory.Make("main")
 	if err != nil {
+		fmt.Printf("ERROR MAKING LOGS: %+v\n", err.Error())
 		logFactory.Close()
 		return err
 	}
+	fmt.Println("error making logs")
 
 	// update fd limit
 	fdLimit := a.config.FdLimit
