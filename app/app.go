@@ -19,7 +19,6 @@ import (
 	"github.com/ava-labs/avalanchego/utils/constants"
 	"github.com/ava-labs/avalanchego/utils/ips"
 	"github.com/ava-labs/avalanchego/utils/logging"
-	"github.com/ava-labs/avalanchego/utils/perms"
 	"github.com/ava-labs/avalanchego/utils/ulimit"
 )
 
@@ -113,14 +112,14 @@ type app struct {
 // are not logged.
 func (a *app) Start() error {
 	// Set the data directory permissions to be read write.
-	if err := perms.ChmodR(a.config.DatabaseConfig.Path, true, perms.ReadWriteExecute); err != nil {
-		fmt.Println("chmod database config error")
-		return fmt.Errorf("failed to restrict the permissions of the database directory with: %w", err)
-	}
-	if err := perms.ChmodR(a.config.LoggingConfig.Directory, true, perms.ReadWriteExecute); err != nil {
-		fmt.Println("chmod logging config error")
-		return fmt.Errorf("failed to restrict the permissions of the log directory with: %w", err)
-	}
+	// if err := perms.ChmodR(a.config.DatabaseConfig.Path, true, perms.ReadWriteExecute); err != nil {
+	// 	fmt.Println("chmod database config error")
+	// 	return fmt.Errorf("failed to restrict the permissions of the database directory with: %w", err)
+	// }
+	// if err := perms.ChmodR(a.config.LoggingConfig.Directory, true, perms.ReadWriteExecute); err != nil {
+	// 	fmt.Println("chmod logging config error")
+	// 	return fmt.Errorf("failed to restrict the permissions of the log directory with: %w", err)
+	// }
 
 	fmt.Println("making logs")
 	// we want to create the logger after the plugin has started the app
